@@ -8,11 +8,20 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-interface StreamsSupplement {
+public interface StreamsSupplement {
 
     static <T,U,R> Stream<R> zip(final Iterable<? extends T> first, final Iterable<? extends U> second, final BiFunction<? super T,? super U,? extends R> func) {
         return StreamSupport.stream(ZipIterator.from(first,second,func),false);
     }
+
+    static <T,U,R> Stream<R> zip(final Collection<? extends T> first, final Collection<? extends U> second, final BiFunction<? super T,? super U,? extends R> func) {
+        return StreamSupport.stream(ZipIterator.from(first,second,func),false);
+    }
+
+    static <T,U,R> Stream<R> zip(final Stream<? extends T> first, final Stream<? extends U> second, final BiFunction<? super T,? super U,? extends R> func) {
+        return StreamSupport.stream(ZipIterator.from(first,second,func),first.isParallel() || second.isParallel());
+    }
+
 
     class ZipIterator<T,U,R> implements Iterator<R> {
 

@@ -1,0 +1,39 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.6.RELEASE'
+		vavrVersion       = '0.9.0'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile("io.vavr:vavr:${vavrVersion}")
+	compile("io.vavr:vavr-jackson:${vavrVersion}")
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+	runtime('org.hsqldb:hsqldb:2.0.0')
+	compileOnly('org.projectlombok:lombok')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.security:spring-security-test')
+	testCompile('com.google.truth:truth:0.34')
+
+}
